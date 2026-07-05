@@ -370,7 +370,7 @@ public abstract class AbstractGrpcTelemetryExporterTest<T, U extends Message> {
   }
 
   @Test
-  // @SuppressLogger(HttpExporter.class)
+  @SuppressLogger(GrpcExporter.class)
   void responseBodyBounds() {
     // We have a 4mb hardcoded response body limit. Responses <= 4mb succeed. Responses >= 4mb
     // fail. We can't test payloads exactly at 4mb because protobuf message lengths are finicky -
@@ -1082,7 +1082,7 @@ public abstract class AbstractGrpcTelemetryExporterTest<T, U extends Message> {
   @Test
   void customServiceClassLoader() {
     ClassLoaderSpy classLoaderSpy =
-        new ClassLoaderSpy(AbstractHttpTelemetryExporterTest.class.getClassLoader());
+        new ClassLoaderSpy(AbstractGrpcTelemetryExporterTest.class.getClassLoader());
 
     try (TelemetryExporter<T> exporter =
         exporterBuilder()
